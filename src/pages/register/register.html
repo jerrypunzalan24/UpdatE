@@ -1,0 +1,51 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+</ion-header>
+
+
+<ion-content >
+    <div align='center' style='padding-left:5%; padding-right:5%;padding-top:5%'>
+        <img src='assets/imgs/register.png'>
+        <div align='left'>
+    
+            <ion-col>
+              <ion-input class='input' placeholder='Firstname'></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-datetime class ='input' placeholder ='Birthday' displayFormat="MM/DD/YYYY" max = "2001-12-31" style ='padding:15px;'></ion-datetime>
+            </ion-col>
+           
+          <ion-col style ='padding-left:0px'>
+            <ion-input class='input'  placeholder='Username' type='text' style='margin-bottom:5px'></ion-input>
+          </ion-col>
+          <ion-col style ='padding-right:0px'> 
+            <ion-input class='input' placeholder='Password' type='text' style='margin-bottom:5px'></ion-input>
+          </ion-col>
+        
+          <ion-row>
+            <ion-col style = 'padding-left:0px'>
+              <ion-label>I'm a</ion-label>
+              <ion-select placeholder='Select One' class='input' style ='padding:15px;max-width:100% !important'>
+                <ion-option value='m'>Male</ion-option>
+                <ion-option value='f'>Female</ion-option>
+              </ion-select>
+            </ion-col>
+            <ion-col style ='padding-right:0px'>
+              <ion-label>Looking for</ion-label>
+              <ion-select placeholder='Select One' class='input' style ='padding:15px;max-width:100% !important'>
+                <ion-option value='m'>Male</ion-option>
+                <ion-option value='f'>Female</ion-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </div>
+        <button ion-button block (click) = "register()" color ="pink" style ='margin-top:20px'>I'm ready!</button>
+      </div>
+</ion-content>
