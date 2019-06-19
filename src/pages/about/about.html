@@ -33,14 +33,15 @@
         </button>
       </div>
     </div>
-    <div *ngIf="this.current >= this.preferences[0].length || this.preferences[0].length === 0"
-        align='center' style='margin-top:25%'>
-        <img src='assets/imgs/sad.png' height='75%' width='75%'>
-        <p style='font-size:4.5vw'>No available matches for you right now</p>
-      </div>
+  <div *ngIf="this.current >= this.preferences[0].length || this.preferences[0].length === 0"
+      align='center' style='margin-top:25%'>
+      <img src='assets/imgs/sad.png' height='75%' width='75%'>
+      <p style='font-size:4.5vw'>No available matches for you right now</p>
+    </div>
   </div>
-  <div *ngIf="this.preferences[0] === undefined">
-    <p style='font-size:4.5vw'>Wait for a moment</p>
-  </div>
+  <div *ngIf="this.preferences[0] === undefined" align ='center' style ='margin-top:25%'>
+      <img src='assets/imgs/sad.png' height='75%' width='75%'>
+      <p style='font-size:4.5vw'>No available matches for you right now</p>
+</div>
 
 </ion-content>

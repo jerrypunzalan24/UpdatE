@@ -7,12 +7,13 @@ import {StorageServiceProvider} from '../../providers/storage-service/storage-se
   templateUrl: 'contact.html'
 })
 export class ContactPage {
-  matches = {}
+  matches:any
+  id: number = 0
   constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
-    
+    this.id = this.storageService.get("account_data")[0].id
   }
-  ionViewWillEnter(){
-    this.http.get("http://192.168.254.100/update/getmatchedusers").subscribe(res =>{
+  ionViewDidEnter(){
+    this.http.get("http://192.168.254.100/update/getmatchedusers/?id="+this.id).subscribe(res =>{
       this.matches = res
       console.log(res)
     },err =>{

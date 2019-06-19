@@ -7,25 +7,25 @@ import {StorageServiceProvider} from '../../providers/storage-service/storage-se
   templateUrl: 'about.html'
 })
 export class AboutPage {
-  preferences = {}
+  preferences:any = {}
   id: number
   current: number = 0
   preference: number
   constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
 
   }
-  ionViewDidLoad(){
-    
+  ionViewWillEnter(){
+    console.log(this.preferences)
     this.current = 0
     this.id = this.storageService.get("account_data")[0].id
     this.preference = this.storageService.get("account_data")[0].preference
     this.http.get("http://192.168.254.100:80/update/getpreference/?id=" + this.id + "&pref=" + this.preference).subscribe(res => {
       console.log("Success!")
       this.preferences = res
-      console.log(this.preferences[0].length)
     }, err => {
       console.log(err)
     })
+
   }
   like(){
     let body = {
