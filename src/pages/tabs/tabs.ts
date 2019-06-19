@@ -16,9 +16,7 @@ export class TabsPage {
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 
-  constructor(private storageService : StorageServiceProvider, public navCtrl : NavController) {
-    if(this.storageService.get("account_data") === undefined){
-      this.navCtrl.setRoot(LoginPage)
-    }
+  constructor( public navCtrl : NavController) {
+    
   }
 }

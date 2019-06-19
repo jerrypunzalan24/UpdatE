@@ -13,10 +13,10 @@ import {StorageServiceProvider} from '../providers/storage-service/storage-servi
 })
 export class MyApp {
   rootPage:any = LoginPage
-
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storageService : StorageServiceProvider) {
     platform.ready().then(() => {
-      this.rootPage = (this.storageService.get("account_data") !== undefined) ? LoginPage : TabsPage
+      console.log(this.storageService.get("account_data"))
+      this.rootPage = (this.storageService.get("account_data") === undefined) ? LoginPage : TabsPage
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();

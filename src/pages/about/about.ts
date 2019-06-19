@@ -1,31 +1,56 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import {HttpClient} from '@angular/common/http';
+import {StorageServiceProvider} from '../../providers/storage-service/storage-service';
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
 })
 export class AboutPage {
-  opacity = 1
-  images = ["doge1.jpg"]
-  constructor(public navCtrl: NavController) {
+  preferences = {}
+  id: number
+  current: number = 0
+  preference: number
+  constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
 
   }
-  
-  iondrag($event, i){
-    let percent = $event.getSlidingPercent()
-    console.log(percent)
-    if(percent > 2){
-      console.log('Right!!!!' + i)
-
-      this.images.shift()
-      console.table(this.images)
+  ionViewDidLoad(){
+    
+    this.current = 0
+    this.id = this.storageService.get("account_data")[0].id
+    this.preference = this.storageService.get("account_data")[0].preference
+    this.http.get("http://192.168.254.100:80/update/getpreference/?id=" + this.id + "&pref=" + this.preference).subscribe(res => {
+      console.log("Success!")
+      this.preferences = res
+      console.log(this.preferences[0].length)
+    }, err => {
+      console.log(err)
+    })
+  }
+  like(){
+    let body = {
+      id: this.id,
+      other_id : this.preferences[0][this.current].id,
+      like : true
     }
-    else if(percent < -2){
-      console.log('Left!!!' + i)
-      
-    this.images.shift()
-    console.table(this.images)
+    this.http.post("http://192.168.254.100:80/update/match/", body).subscribe(res => {
+      console.log("Liked")
+      this.current++
+    }, err => {
+      console.log("Check your internet connection ", err)
+    })
+  }
+  dislike(){
+    let body = {
+      id : this.id,
+      other_id : this.preferences[0][this.current].id,
+      dislike : true
     }
+    this.http.post("http://192.168.254.100:80/update/match/", body).subscribe( res => {
+      console.log("Disliked")
+      this.current++
+    }, err => {
+      console.log("Check your internet connection ", err)
+    })
   }
 }

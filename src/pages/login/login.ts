@@ -44,7 +44,6 @@ export class LoginPage {
       password: this.password,
       submit: true
     }
-    console.log(body)
     if(body.username !== undefined && body.password !== undefined){
     this.http.post("http://192.168.254.100:80/update/authentication/",body).subscribe( data => {
       if(data[0].success){
