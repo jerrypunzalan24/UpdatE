@@ -5,6 +5,9 @@ import {RegisterPage} from '../register/register';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
+import {StorageServiceProvider} from '../../providers/storage-service/storage-service';
+import { HomePage } from '../home/home';
+import {TabsPage} from '../tabs/tabs';
 /**
  * Generated class for the LoginPage page.
  *
@@ -20,13 +23,15 @@ import { HttpClient } from '@angular/common/http';
 export class LoginPage {
   username: String;
   password: String;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController, private storageProvider : StorageServiceProvider) {
   }
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.http.get("http://localhost:80/update/sample/").subscribe((res)=>{
-      console.log(res)
+    this.http.get("http://192.168.254.100:80/update/sample/").subscribe((res)=>{
+      this.displayToast("Connected successfully")
+    }, err =>{
+      this.displayToast("Connnection failed")
     })
 
   }
@@ -41,13 +46,16 @@ export class LoginPage {
     }
     console.log(body)
     if(body.username !== undefined && body.password !== undefined){
-    this.http.post("http://localhost:80/update/authentication/",body).subscribe( data => {
+    this.http.post("http://192.168.254.100:80/update/authentication/",body).subscribe( data => {
       if(data[0].success){
-        this.displayToast("Login success!")
+        this.storageProvider.set("account_data", data)
+        this.navCtrl.setRoot(TabsPage)
       }
       else{
         this.displayToast("Incorrect username and password")
       }
+    }, error =>{
+      this.displayToast("Request failed. Maybe check your internet connection")
     })
   }
   else{

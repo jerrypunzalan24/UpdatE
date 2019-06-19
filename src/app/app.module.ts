@@ -13,6 +13,9 @@ import { RegisterPage } from '../pages/register/register';
 import { ChatPage } from '../pages/chat/chat';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StorageServiceProvider } from '../providers/storage-service/storage-service';
+import { CProvider } from '../providers/c/c';
+import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    StorageServiceProvider,
+    CProvider,
+    LocalStorageProvider
   ]
 })
 export class AppModule {}

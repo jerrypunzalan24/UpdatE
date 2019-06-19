@@ -16,32 +16,32 @@
         <div align='left'>
     
             <ion-col>
-              <ion-input class='input' placeholder='Firstname'></ion-input>
+              <ion-input class='input' [(ngModel)] = "this.firstname" placeholder='Firstname'></ion-input>
             </ion-col>
             <ion-col>
-              <ion-datetime class ='input' placeholder ='Birthday' displayFormat="MM/DD/YYYY" max = "2001-12-31" style ='padding:15px;'></ion-datetime>
+              <ion-datetime class ='input' [(ngModel)] = "this.birthday" placeholder ='Birthday' displayFormat="MM/DD/YYYY" max = "2001-12-31" style ='padding:15px;'></ion-datetime>
             </ion-col>
            
           <ion-col style ='padding-left:0px'>
-            <ion-input class='input'  placeholder='Username' type='text' style='margin-bottom:5px'></ion-input>
+            <ion-input class='input' [(ngModel)] = "this.username" placeholder='Username' type='text' style='margin-bottom:5px'></ion-input>
           </ion-col>
           <ion-col style ='padding-right:0px'> 
-            <ion-input class='input' placeholder='Password' type='text' style='margin-bottom:5px'></ion-input>
+            <ion-input class='input' [(ngModel)] = "this.password" placeholder='Password' type='password' style='margin-bottom:5px'></ion-input>
           </ion-col>
         
           <ion-row>
             <ion-col style = 'padding-left:0px'>
               <ion-label>I'm a</ion-label>
-              <ion-select placeholder='Select One' class='input' style ='padding:15px;max-width:100% !important'>
-                <ion-option value='m'>Male</ion-option>
-                <ion-option value='f'>Female</ion-option>
+              <ion-select placeholder='Select One' class='input' [(ngModel)] = "this.gender" style ='padding:15px;max-width:100% !important'>
+                <ion-option value='1'>Men</ion-option>
+                <ion-option value='0'>Women</ion-option>
               </ion-select>
             </ion-col>
             <ion-col style ='padding-right:0px'>
-              <ion-label>Looking for</ion-label>
-              <ion-select placeholder='Select One' class='input' style ='padding:15px;max-width:100% !important'>
-                <ion-option value='m'>Men</ion-option>
-                <ion-option value='f'>Women</ion-option>
+              <ion-label>Interested in</ion-label>
+              <ion-select placeholder='Select One' class='input' [(ngModel)] = "this.preference" style ='padding:15px;max-width:100% !important'>
+                <ion-option value='1'>Men</ion-option>
+                <ion-option value='0'>Women</ion-option>
               </ion-select>
             </ion-col>
           </ion-row>
