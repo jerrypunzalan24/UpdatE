@@ -12,28 +12,26 @@ export class HomePage {
   userData = {}
   constructor(public navCtrl: NavController, private storageService: StorageServiceProvider, private http: HttpClient, public toastController: ToastController) {
     this.userData = {
-      0: {
-        "id": this.storageService.get("account_data")[0].id,
-        "firstname": this.storageService.get("account_data")[0].firstname,
-        "age": this.storageService.get("account_data")[0].age,
-        "username": this.storageService.get("account_data")[0].username,
-        "picture": this.storageService.get("account_data")[0].picture,
-        "gender": this.storageService.get("account_data")[0].gender,
-        "preference": this.storageService.get("account_data")[0].preference,
-        "city": this.storageService.get("account_data")[0].city,
-        "about": this.storageService.get("account_data")[0].about,
-        "school": this.storageService.get("account_data")[0].school
-      }
+        "id": this.storageService.get("account_data").id,
+        "firstname": this.storageService.get("account_data").firstname,
+        "age": this.storageService.get("account_data").age,
+        "username": this.storageService.get("account_data").username,
+        "picture": this.storageService.get("account_data").picture,
+        "gender": this.storageService.get("account_data").gender,
+        "preference": this.storageService.get("account_data").preference,
+        "city": this.storageService.get("account_data").city,
+        "about": this.storageService.get("account_data").about,
+        "school": this.storageService.get("account_data").school
     }
   }
   editabout() {
     let body = {
-      about: this.userData[0].about,
-      id: this.userData[0].id,
+      about: this.userData['about'],
+      id: this.userData['id'],
       editabout: true
     }
     this.http.post("http://localhost/update/editabout/", body).subscribe(res => {
-      this.userData[0].about = body.about
+      this.userData['about'] = body.about
       this.storageService.set("account_data", this.userData)
       this.displayToast("Edit success!")
     }, err => {
@@ -43,18 +41,18 @@ export class HomePage {
   }
   editinfo() {
     let body = {
-      firstname: this.userData[0].firstname,
-      age: this.userData[0].age,
-      city: this.userData[0].city,
-      school: this.userData[0].school,
-      id: this.userData[0].id,
+      firstname: this.userData['firstname'],
+      age: this.userData['age'],
+      city: this.userData['city'],
+      school: this.userData['school'],
+      id: this.userData['id'],
       editinfo: true,
     }
     this.http.post('http://localhost/update/edit/', body).subscribe(res => {
-      this.userData[0].firstname = body.firstname
-      this.userData[0].age = body.age
-      this.userData[0].school = body.school
-      this.userData[0].city = body.city
+      this.userData['firstname'] = body.firstname
+      this.userData['age'] = body.age
+      this.userData['school'] = body.school
+      this.userData['city'] = body.city
       this.storageService.set("account_data", this.userData)
       this.displayToast("Edit success!")
     }, err => {
@@ -71,7 +69,7 @@ export class HomePage {
   }
   logout() {
     let body = {
-      id: this.storageService.get("account_data")[0].id,
+      id: this.storageService.get("account_data").id,
       submit: true
     }
     this.http.post("http://192.168.254.100:80/update/logout/", body).subscribe(res => {

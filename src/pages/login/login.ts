@@ -46,8 +46,9 @@ export class LoginPage {
     }
     if(body.username !== undefined && body.password !== undefined){
     this.http.post("http://192.168.254.100:80/update/authentication/",body).subscribe( data => {
-      if(data[0].success){
+      if(data['error'] === undefined){
         this.storageProvider.set("account_data", data)
+        console.log(data)
         this.navCtrl.setRoot(TabsPage)
       }
       else{

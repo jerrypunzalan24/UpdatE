@@ -3,23 +3,28 @@
 </ion-header>
 
 <ion-content style='background-color:rgb(246, 246, 246)'>
-  <div *ngIf="this.preferences[0] !== undefined">
-    <div *ngIf="this.preferences[0].length > this.current">
+  <div *ngIf="this.preferences !== undefined">
+    <div *ngIf="this.preferences.length > this.current">
       <ion-card style='margin-bottom:10%'>
-        <img src="data:image/jpg;base64,{{this.preferences[0][this.current].picture}}" />
+        <img src="data:image/jpg;base64,{{this.preferences[this.current].picture}}" />
         <ion-card-content>
           <ion-card-title>
-            <h1 style='font-size:5.5vw'>{{this.preferences[0][this.current].firstname}},
-              {{this.preferences[0][this.current].age}}</h1>
+            <h1 style='font-size:5.5vw'>{{this.preferences[this.current].firstname}},
+              {{this.preferences[this.current].age}}</h1>
           </ion-card-title>
-          <div *ngIf="this.preferences[0][this.current].city !== ''">
+          <div *ngIf="this.preferences[this.current].city !== ''">
             <p style='font-size:4vw'>
-              <ion-icon name='home'></ion-icon> {{this.preferences[0][this.current].city}}
+              <ion-icon name='home'></ion-icon> {{this.preferences[this.current].city}}
             </p>
           </div>
-          <div *ngIf="this.preferences[0][this.current].city !== ''">
+          <div *ngIf="this.preferences[this.current].city !== ''">
             <p style='font-size:4vw'>
-              <ion-icon name='school'></ion-icon> {{this.preferences[0][this.current].school}}
+              <ion-icon name='school'></ion-icon> {{this.preferences[this.current].school}}
+            </p>
+          </div>
+          <div *ngIf = "this.preferences[this.current].about !== ''">
+            <p style ='font-size:4vw'>
+              {{this.preferences[this.current].about}}
             </p>
           </div>
         </ion-card-content>
@@ -33,15 +38,15 @@
         </button>
       </div>
     </div>
-  <div *ngIf="this.current >= this.preferences[0].length || this.preferences[0].length === 0"
+  <div *ngIf="this.current >= this.preferences.length || this.preferences.length === 0"
       align='center' style='margin-top:25%'>
       <img src='assets/imgs/sad.png' height='75%' width='75%'>
-      <p style='font-size:4.5vw'>No available matches for you right now</p>
+      <p style='font-size:4.5vw'>No available matches at the moment.</p>
     </div>
   </div>
-  <div *ngIf="this.preferences[0] === undefined" align ='center' style ='margin-top:25%'>
+  <div *ngIf="this.preferences === undefined" align ='center' style ='margin-top:25%'>
       <img src='assets/imgs/sad.png' height='75%' width='75%'>
-      <p style='font-size:4.5vw'>No available matches for you right now</p>
+      <p style='font-size:4.5vw'>No available matches at the moment</p>
 </div>
 
 </ion-content>

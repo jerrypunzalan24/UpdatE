@@ -17,11 +17,12 @@ export class AboutPage {
   ionViewWillEnter(){
     console.log(this.preferences)
     this.current = 0
-    this.id = this.storageService.get("account_data")[0].id
-    this.preference = this.storageService.get("account_data")[0].preference
+    this.id = this.storageService.get("account_data").id
+    this.preference = this.storageService.get("account_data").preference
     this.http.get("http://192.168.254.100:80/update/getpreference/?id=" + this.id + "&pref=" + this.preference).subscribe(res => {
       console.log("Success!")
       this.preferences = res
+      console.log(res)
     }, err => {
       console.log(err)
     })
@@ -30,7 +31,7 @@ export class AboutPage {
   like(){
     let body = {
       id: this.id,
-      other_id : this.preferences[0][this.current].id,
+      other_id : this.preferences[this.current].id,
       like : true
     }
     this.http.post("http://192.168.254.100:80/update/match/", body).subscribe(res => {
@@ -43,7 +44,7 @@ export class AboutPage {
   dislike(){
     let body = {
       id : this.id,
-      other_id : this.preferences[0][this.current].id,
+      other_id : this.preferences[this.current].id,
       dislike : true
     }
     this.http.post("http://192.168.254.100:80/update/match/", body).subscribe( res => {

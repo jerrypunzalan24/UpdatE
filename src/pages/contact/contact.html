@@ -6,11 +6,15 @@
   <h5>CHAT</h5>
   <hr />
   <div *ngFor ="let match of matches">
-  <ion-item>
-    <ion-avatar item-start>
-      <img src="data:image/jpg;base64, {{match.picture}}">
+  <ion-item (click) = "gotochat(match.id, match.username, match.picture)">
+    <ion-avatar item-start *ngIf = "match.picture !== ''">
+      <img src="data:image/jpg;base64,{{match.picture}}" >
+    </ion-avatar>
+    <ion-avatar item-start *ngIf = "match.picture === ''">
+      <img src= 'assets/imgs/default-{{match.gender}}.png'>
     </ion-avatar>
     {{match.username}}
+    <p item-right>{{(match.isactive==1) ? "Online" : "Offline"}}</p>
   </ion-item>
   </div>
   <h5></h5>

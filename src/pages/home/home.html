@@ -4,32 +4,32 @@
 
 <ion-content padding >
   <div align = 'center'>
-  <div *ngIf = "this.userData[0].picture !== ''">
-    <img src ='data:image/jpg;base64,{{this.userData[0].picture}}' width = '50%' height ='50%' style = 'border-radius:50%'>
+  <div *ngIf = "this.userData.picture !== ''">
+    <img src ='data:image/jpg;base64,{{this.userData.picture}}' width = '50%' height ='50%' style = 'border-radius:50%'>
   </div>
-  <div *ngIf = "this.userData[0].picture == ''">
-    <img src ="assets/imgs/default-{{this.userData[0].gender}}.png" width ='50%' height = '50%' style ='border-radius:50%'>
+  <div *ngIf = "this.userData.picture == ''">
+    <img src ="assets/imgs/default-{{this.userData.gender}}.png" width ='50%' height = '50%' style ='border-radius:50%'>
   </div>  
-  <h1>{{this.userData[0].firstname}}, {{this.userData[0].age}}</h1>
-  <p *ngIf = "this.userData[0].city != ''"><ion-icon name ='home'></ion-icon> {{this.userData[0].city}}</p>
-  <p *ngIf = "this.userData[0].school != ''"><ion-icon name = 'school'></ion-icon> {{this.userData[0].school}}</p> 
+  <h1>{{this.userData.firstname}}, {{this.userData.age}}</h1>
+  <p *ngIf = "this.userData.city != ''"><ion-icon name ='home'></ion-icon> {{this.userData.city}}</p>
+  <p *ngIf = "this.userData.school != ''"><ion-icon name = 'school'></ion-icon> {{this.userData.school}}</p> 
   </div>
   <!-- Info -->
   <div>
     <ion-item></ion-item>
     <h5>About yourself</h5>
-    <ion-input class ='input' [(ngModel)] ="this.userData[0].about" value = '{{this.userData[0].about}}'placeholder = 'Make it short :)'></ion-input>
+    <ion-input class ='input' [(ngModel)] ="this.userData.about" value = '{{this.userData.about}}'placeholder = 'Make it short :)'></ion-input>
     <button ion-button style ='margin-top:10px' (click) = "editabout()">Save</button>
     <ion-item></ion-item>
     <h5>Personal Info</h5>
     <ion-label>First name</ion-label>
-    <ion-input placeholder ='Firstname' [(ngModel)] = "this.userData[0].firstname" value ='{{this.userData[0].firstname}}'></ion-input>
+    <ion-input placeholder ='Firstname' [(ngModel)] = "this.userData.firstname" value ='{{this.userData.firstname}}'></ion-input>
     <ion-label>Age</ion-label>
-    <ion-input placeholder ='Age' [(ngModel)] = "this.userData[0].age" value ='{{this.userData[0].age}}' type= 'number'></ion-input>
+    <ion-input placeholder ='Age' [(ngModel)] = "this.userData.age" value ='{{this.userData.age}}' type= 'number'></ion-input>
     <ion-label>School</ion-label>
-    <ion-input class ='input' [(ngModel)] ="this.userData[0].school" value = '{{this.userData[0].school}}'></ion-input>
+    <ion-input class ='input' [(ngModel)] ="this.userData.school" value = '{{this.userData.school}}'></ion-input>
     <ion-label>City</ion-label>
-    <ion-input class = 'input' [(ngModel)] ="this.userData[0].city" value ='{{this.userData[0].city}}'></ion-input>
+    <ion-input class = 'input' [(ngModel)] ="this.userData.city" value ='{{this.userData.city}}'></ion-input>
     <button ion-button style ='margin-top:10px' (click) = "editinfo()" block>Save changes</button>
     <button ion-button style ='margin-top:20px' color = 'danger' block (click) ="logout()">Sign out</button>
   </div>

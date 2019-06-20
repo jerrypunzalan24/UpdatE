@@ -1,34 +1,43 @@
 <ion-header>
 
     <ion-navbar>
-      <ion-title>dog_22
+      <ion-title>
+        {{this.username}}
       </ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content>
     <div class="message-wrap">
    <!-- Dynamic Message -->
-      <div *ngFor="let msg of msgList"
+      <div *ngFor="let chat of chathistory"
            class="message"
-           [class.left]=" msg.userId === toUser.id "
-           [class.right]=" msg.userId === user.id ">
-        <img class="user-img" [src]="msg.userAvatar" alt="" >
-        <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
+           [class.left]=" chat.account_id !== this.user_id "
+           [class.right]=" chat.account_id === this.user_id ">
+           <div *ngIf = "chat.account_id !== this.user_id">
+              <img class="user-img" src = "data:image/jpg;base64,{{this.other_avatar}}" alt="" >
+           </div>
+           <div *ngIf = "chat.account_id === this.user_id">
+              <img class="user-img" src = "data:image/jpg;base64,{{this.your_avatar}}" alt="" >
+           </div>
         <div class="msg-detail">
           <div class="msg-info">
-            <p>
-              dog_22&nbsp;&nbsp;&nbsp;4:20PM</p>
+            <p *ngIf = "chat.account_id === this.user_id">
+              You
+            </p>
+            <p *ngIf = "chat.account_id !== this.user_id">
+              {{this.username}}
+            </p>
           </div>
           <div class="msg-content">
             <span class="triangle"></span>
-            <p class="line-breaker ">{{msg.message}}</p>
+            <p class="line-breaker ">{{chat.message}}</p>
           </div>
         </div>
       </div>
       <!-- End dynamic message -->
 
       <!-- Sample message -->
-      <div class ='message' [class.left] = "true">
+      <!-- <div class ='message' [class.left] = "true">
         <img class ='user-img' src='assets/imgs/doge1.jpg' alt ="">
         <div class ='msg-detail'>
           <div class ='msg-info'>
@@ -51,7 +60,7 @@
               <p class ='line-breaker'>Eyy</p>
             </div>
           </div>
-        </div>
+        </div> -->
       <!-- End sample message -->
   
     </div>
@@ -64,11 +73,11 @@
       </button>
       <textarea #chat_input
                 placeholder="Text Input"
-                [(ngModel)]="editorMsg"
-                (keyup.enter)="sendMsg()"
+                [(ngModel)]="myMessage"
+                (keyup.enter)="sendMessage()"
                 (focusin)="onFocus()">
       </textarea>
-      <button ion-button clear icon-only item-right (click)="sendMsg()">
+      <button ion-button clear icon-only item-right (click)="sendMessage()">
         <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
       </button>
     </div>
