@@ -11,6 +11,7 @@ export class AboutPage {
   id: number
   current: number = 0
   preference: number
+  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
   constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
 
   }
@@ -19,10 +20,9 @@ export class AboutPage {
     this.current = 0
     this.id = this.storageService.get("account_data").id
     this.preference = this.storageService.get("account_data").preference
-    this.http.get("http://192.168.254.100:80/update/getpreference/?id=" + this.id + "&pref=" + this.preference).subscribe(res => {
+    this.http.get(this.hostname + "getpreference/" + this.id + "/" + this.preference).subscribe(res => {
       console.log("Success!")
       this.preferences = res
-      console.log(res)
     }, err => {
       console.log(err)
     })
@@ -34,7 +34,7 @@ export class AboutPage {
       other_id : this.preferences[this.current].id,
       like : true
     }
-    this.http.post("http://192.168.254.100:80/update/match/", body).subscribe(res => {
+    this.http.post(this.hostname + "match", body).subscribe(res => {
       console.log("Liked")
       this.current++
     }, err => {
@@ -47,7 +47,7 @@ export class AboutPage {
       other_id : this.preferences[this.current].id,
       dislike : true
     }
-    this.http.post("http://192.168.254.100:80/update/match/", body).subscribe( res => {
+    this.http.post(this.hostname + "match", body).subscribe( res => {
       console.log("Disliked")
       this.current++
     }, err => {

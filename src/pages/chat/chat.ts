@@ -24,6 +24,8 @@ export class ChatPage {
   your_avatar : string
   other_avatar : string
   chathistory: any
+  updateChatVar : any
+  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
   constructor(public navCtrl: NavController, public navParams: NavParams, private http : HttpClient) {
     this.user_id = this.navParams.get("user_id")
     this.other_id = this.navParams.get("other_id")
@@ -32,7 +34,11 @@ export class ChatPage {
     this.other_avatar = this.navParams.get("other_avatar")
     this.updateChat()
     this.scrollToBottom()
-    setInterval(()=>{
+
+  }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ChatPage');
+    this.updateChatVar = setInterval(()=>{
       this.updateChat()
     },1000)
   }
@@ -42,15 +48,15 @@ export class ChatPage {
       other_id : this.other_id,
       getchat : true
     }
-    this.http.post("http://192.168.254.100:80/update/getchathistory/",body).subscribe(res => {
+    this.http.post(this.hostname + "getchathistory",body).subscribe(res => {
       this.chathistory = res
       console.log(res)
     }, err=>{
       console.log(err)
     })
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatPage');
+  ionViewWillLeave(){
+    clearInterval(this.updateChatVar)
   }
   sendMessage(){
     let body = {
@@ -59,7 +65,7 @@ export class ChatPage {
       message : this.myMessage,
       submit : true
     }
-    this.http.post("http://192.168.254.100:80/update/sendmessage/", body).subscribe(res => {
+    this.http.post(this.hostname + "sendmessage", body).subscribe(res => {
       this.updateChat()
       this.scrollToBottom()
     }, err =>{

@@ -1,16 +1,20 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, App } from 'ionic-angular';
 import { StorageServiceProvider } from '../../providers/storage-service/storage-service';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
+import {Camera, CameraOptions} from '@ionic-native/camera';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
   userData = {}
-  constructor(public navCtrl: NavController, private storageService: StorageServiceProvider, private http: HttpClient, public toastController: ToastController) {
+  myphoto = ''
+  isdisabled : boolean = true
+  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
+  constructor(public app : App, public navCtrl: NavController, private storageService: StorageServiceProvider, private http: HttpClient, public toastController: ToastController, public camera : Camera) {
     this.userData = {
         "id": this.storageService.get("account_data").id,
         "firstname": this.storageService.get("account_data").firstname,
@@ -23,6 +27,33 @@ export class HomePage {
         "about": this.storageService.get("account_data").about,
         "school": this.storageService.get("account_data").school
     }
+    this.myphoto = this.userData['picture']
+  }
+  setProfilepic(){
+    const options : CameraOptions = {
+      quality : 70,
+      destinationType : this.camera.DestinationType.DATA_URL,
+      sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum : false
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      this.myphoto =  imageData
+      this.isdisabled = false
+    })
+  }
+  updateProfilepic(){
+    const body = {
+      photo : this.myphoto,
+      id : this.userData['id'],
+      submit : true,
+    }
+    this.http.post(this.hostname + "changeprofilepic", body).subscribe(res =>{
+      this.displayToast("Success!")
+      this.isdisabled = true
+      console.log(res)
+    }, err =>{
+      console.log(err)
+    })
   }
   editabout() {
     let body = {
@@ -30,7 +61,7 @@ export class HomePage {
       id: this.userData['id'],
       editabout: true
     }
-    this.http.post("http://localhost/update/editabout/", body).subscribe(res => {
+    this.http.post(this.hostname + "editabout", body).subscribe(res => {
       this.userData['about'] = body.about
       this.storageService.set("account_data", this.userData)
       this.displayToast("Edit success!")
@@ -48,7 +79,7 @@ export class HomePage {
       id: this.userData['id'],
       editinfo: true,
     }
-    this.http.post('http://localhost/update/edit/', body).subscribe(res => {
+    this.http.post(this.hostname + 'edit', body).subscribe(res => {
       this.userData['firstname'] = body.firstname
       this.userData['age'] = body.age
       this.userData['school'] = body.school
@@ -72,9 +103,9 @@ export class HomePage {
       id: this.storageService.get("account_data").id,
       submit: true
     }
-    this.http.post("http://192.168.254.100:80/update/logout/", body).subscribe(res => {
+    this.http.post(this.hostname + "logout", body).subscribe(res => {
       this.storageService.remove("account_data")
-      this.navCtrl.setRoot(LoginPage)
+      this.app.getRootNav().setRoot(LoginPage);
       console.log("Success!")
     })
   }

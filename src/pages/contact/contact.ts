@@ -11,15 +11,17 @@ export class ContactPage {
   matches:any
   id: number = 0
   picture : string
+  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
   constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
     this.id = this.storageService.get("account_data").id
     this.picture = this.storageService.get("account_data").picture
   }
   ionViewDidEnter(){
-    this.http.get("http://192.168.254.100/update/getmatchedusers/?id="+this.id).subscribe(res =>{
+    this.http.get(this.hostname + "getmatchedusers/"+this.id).subscribe(res =>{
       this.matches = res
       console.log(res)
     },err =>{
+      console.log(err.error)
     })
   }
   gotochat(id, username, other_avatar){

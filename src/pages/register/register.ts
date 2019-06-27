@@ -23,6 +23,7 @@ export class RegisterPage {
   birthday: string
   gender: number
   preference: number
+  hostname: string = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/"
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController) {
   }
   ionViewDidLoad() {
@@ -40,7 +41,7 @@ export class RegisterPage {
     }
     console.log(body.birthday)
     if(body.username !== '' && body.firstname !== '' && body.password !== '' && body.password !== '' && body.birthday !== ''){
-    this.http.post("http://192.168.254.100:80/update/register/", body).subscribe(res => {
+    this.http.post(this.hostname + "register", body).subscribe(res => {
       this.displayToast("Register success!")
       this.navCtrl.setRoot(LoginPage);
       console.log(res)

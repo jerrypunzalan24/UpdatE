@@ -5,11 +5,12 @@
 <ion-content padding >
   <div align = 'center'>
   <div *ngIf = "this.userData.picture !== ''">
-    <img src ='data:image/jpg;base64,{{this.userData.picture}}' width = '50%' height ='50%' style = 'border-radius:50%'>
+    <img src = "data:image/jpg;base64,{{this.myphoto}}" width = '50%' (click) = "setProfilepic()" height ='50%' style = 'border-radius:50%'>
   </div>
   <div *ngIf = "this.userData.picture == ''">
-    <img src ="assets/imgs/default-{{this.userData.gender}}.png" width ='50%' height = '50%' style ='border-radius:50%'>
+    <img src ="assets/imgs/default-{{this.userData.gender}}.png" (click) = "setProfilepic()" width ='50%' height = '50%' style ='border-radius:50%'>
   </div>  
+  <button ion-button [disabled] = "isenabled" (click) ="updateProfilepic()">Update profile picture</button>
   <h1>{{this.userData.firstname}}, {{this.userData.age}}</h1>
   <p *ngIf = "this.userData.city != ''"><ion-icon name ='home'></ion-icon> {{this.userData.city}}</p>
   <p *ngIf = "this.userData.school != ''"><ion-icon name = 'school'></ion-icon> {{this.userData.school}}</p> 

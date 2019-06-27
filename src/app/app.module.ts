@@ -16,6 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
 import { CProvider } from '../providers/c/c';
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
+import {Camera} from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { LocalStorageProvider } from '../providers/local-storage/local-storage';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageServiceProvider,
     CProvider,
-    LocalStorageProvider
+    LocalStorageProvider,
+    Camera
   ]
 })
 export class AppModule {}
