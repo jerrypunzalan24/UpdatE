@@ -2,7 +2,7 @@
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
+import {HostnameProvider} from '../../providers/hostname/hostname';
 /**
  * Generated class for the ChatPage page.
  *
@@ -25,8 +25,7 @@ export class ChatPage {
   other_avatar : string
   chathistory: any
   updateChatVar : any
-  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http : HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http : HttpClient, public h : HostnameProvider) {
     this.user_id = this.navParams.get("user_id")
     this.other_id = this.navParams.get("other_id")
     this.username = this.navParams.get("username")
@@ -48,7 +47,7 @@ export class ChatPage {
       other_id : this.other_id,
       getchat : true
     }
-    this.http.post(this.hostname + "getchathistory",body).subscribe(res => {
+    this.http.post(this.h.hostname + "getchathistory",body).subscribe(res => {
       this.chathistory = res
       console.log(res)
     }, err=>{
@@ -65,7 +64,7 @@ export class ChatPage {
       message : this.myMessage,
       submit : true
     }
-    this.http.post(this.hostname + "sendmessage", body).subscribe(res => {
+    this.http.post(this.h.hostname + "sendmessage", body).subscribe(res => {
       this.updateChat()
       this.scrollToBottom()
     }, err =>{

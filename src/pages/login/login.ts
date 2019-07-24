@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 import {StorageServiceProvider} from '../../providers/storage-service/storage-service';
 import { HomePage } from '../home/home';
 import {TabsPage} from '../tabs/tabs';
+import { HostnameProvider } from '../../providers/hostname/hostname';
+import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder'
 /**
  * Generated class for the LoginPage page.
  *
@@ -23,13 +26,13 @@ import {TabsPage} from '../tabs/tabs';
 export class LoginPage {
   username: String;
   password: String;
-  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController, private storageProvider : StorageServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController,
+    private storageProvider : StorageServiceProvider, public h : HostnameProvider) {
   }
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    this.http.get(this.hostname + "accounts").subscribe((res)=>{
+    this.http.get(this.h.hostname + "accounts").subscribe((res)=>{
       this.displayToast("Connected successfully")
     }, err =>{
       this.displayToast("Connnection failed")
@@ -46,7 +49,7 @@ export class LoginPage {
       submit: true
     }
     if(body.username !== undefined && body.password !== undefined){
-    this.http.post( this.hostname + "authentication",body).subscribe( data => {
+    this.http.post( this.h.hostname + "authentication",body).subscribe( data => {
       if(data['error'] === undefined){
         this.storageProvider.set("account_data", data)
         console.log(data)

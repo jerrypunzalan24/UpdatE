@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
-import { LoginPage } from '../login/login';
+import {ExamPage} from '../exam/exam';
 import { ToastController } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
+import {TosAndPolicyPage} from '../tos-and-policy/tos-and-policy';
+import {AlertController} from 'ionic-angular';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -17,17 +17,36 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  firstname: string
-  username: string
-  password: string
-  birthday: string
+  firstname: string = ''
+  username: string = ''
+  password: string = ''
+  birthday: string = ''
   gender: number
   preference: number
-  hostname: string = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/"
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public toastController: ToastController) {
+  privacypolicy : boolean
+  termsofservice : boolean
+  requiredFields : boolean
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, 
+    public toastController: ToastController,
+    public alertCtrl : AlertController) {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+  }
+  readPrivacyPolicy(){
+    this.navCtrl.push(TosAndPolicyPage, {privacyPolicy : true})
+  }
+  readTOS(){
+    this.navCtrl.push(TosAndPolicyPage, {TOS: true})
+  }
+  ionViewWillEnter(){
+    if(this.navParams.get("TOSBack")){
+      this.termsofservice = true
+    }
+    if(this.navParams.get("PrivacyPolicyBack")){
+      this.privacypolicy = true
+    }
   }
   register() {
     let body = {
@@ -39,17 +58,11 @@ export class RegisterPage {
       preference: this.preference,
       submit: true
     }
-    console.log(body.birthday)
-    if(body.username !== '' && body.firstname !== '' && body.password !== '' && body.password !== '' && body.birthday !== ''){
-    this.http.post(this.hostname + "register", body).subscribe(res => {
-      this.displayToast("Register success!")
-      this.navCtrl.setRoot(LoginPage);
-      console.log(res)
-    }, err => {
-      this.displayToast("Register failed. Maybe check your internet connetion")
-      console.log(err)
-    })
-  }
+    this.requiredFields = this.username !== '' && this.firstname !== '' && this.password !== '' && this.password !== '' && this.birthday !== ''
+    console.log(this.requiredFields)
+    if(this.requiredFields){
+      this.navCtrl.push(ExamPage,{data: body});
+    }
   }
   async displayToast(msg) {
     const toast = await this.toastController.create({

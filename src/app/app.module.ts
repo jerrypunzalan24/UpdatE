@@ -11,12 +11,20 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ChatPage } from '../pages/chat/chat';
+import { ExamPage } from '../pages/exam/exam';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {TosAndPolicyPage} from '../pages/tos-and-policy/tos-and-policy';
 import { StorageServiceProvider } from '../providers/storage-service/storage-service';
 import { CProvider } from '../providers/c/c';
+
 import { LocalStorageProvider } from '../providers/local-storage/local-storage';
 import {Camera} from '@ionic-native/camera';
+
+import {Geolocation} from '@ionic-native/geolocation';
+import {NativeGeocoder} from '@ionic-native/native-geocoder';
+import { HostnameProvider } from '../providers/hostname/hostname';
+import { GalleryPage } from '../pages/gallery/gallery';
 
 @NgModule({
   declarations: [
@@ -27,7 +35,10 @@ import {Camera} from '@ionic-native/camera';
     TabsPage,
     LoginPage,
     RegisterPage,
-    ChatPage
+    ChatPage,
+    ExamPage,
+    GalleryPage,
+    TosAndPolicyPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +54,10 @@ import {Camera} from '@ionic-native/camera';
     TabsPage,
     LoginPage,
     RegisterPage,
-    ChatPage
+    ChatPage,
+    ExamPage,
+    TosAndPolicyPage,
+    GalleryPage
   ],
   providers: [
     StatusBar,
@@ -52,7 +66,10 @@ import {Camera} from '@ionic-native/camera';
     StorageServiceProvider,
     CProvider,
     LocalStorageProvider,
-    Camera
+    Camera,
+    Geolocation,
+    NativeGeocoder,
+    HostnameProvider
   ]
 })
 export class AppModule {}

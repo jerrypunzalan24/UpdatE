@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import {HttpClient} from '@angular/common/http';
 import {StorageServiceProvider} from '../../providers/storage-service/storage-service';
 import {ChatPage} from '../chat/chat';
+import {HostnameProvider} from '../../providers/hostname/hostname';
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
@@ -11,13 +12,13 @@ export class ContactPage {
   matches:any
   id: number = 0
   picture : string
-  hostname : String = "http://updateaws-env.pvfiwbdpgp.us-east-2.elasticbeanstalk.com/";
-  constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider) {
-    this.id = this.storageService.get("account_data").id
+  constructor(public navCtrl: NavController, private http : HttpClient, private storageService : StorageServiceProvider,
+    public h : HostnameProvider) {
+    this.id = this.storageService.get("account_data").account_id
     this.picture = this.storageService.get("account_data").picture
   }
   ionViewDidEnter(){
-    this.http.get(this.hostname + "getmatchedusers/"+this.id).subscribe(res =>{
+    this.http.get(this.h.hostname + "getmatchedusers/"+this.id).subscribe(res =>{
       this.matches = res
       console.log(res)
     },err =>{

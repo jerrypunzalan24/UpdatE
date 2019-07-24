@@ -46,6 +46,8 @@
             </ion-col>
           </ion-row>
         </div>
-        <button ion-button block (click) = "register()" color ="pink" style ='margin-top:20px'>I'm ready!</button>
+        <p>Before you proceed to our questionnaire, make sure you have read the UlikE's <a (click) = "readPrivacyPolicy()">Privacy Policy</a> and <a (click) = "readTOS()">Terms of Service</a></p>
+
+        <button ion-button block (click) = "register()" [disabled] = "!this.termsofservice  || !this.privacypolicy" color ="pink" style ='margin-top:20px'>PROCEED TO QUESTIONNAIRE</button>
       </div>
 </ion-content>
