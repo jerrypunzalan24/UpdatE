@@ -53,7 +53,7 @@ export class ExamPage {
       preference : this.preference,
       answers : this.answers
     }
-    this.http.post("http://localhost/update-aws/public/" + "register",body).subscribe((res)=>{
+    this.http.post(this.h.getHostname() + "register",body).subscribe((res)=>{
       if(res['error'] === undefined){
         this.displayToast("Register Success!")
         this.navCtrl.setRoot(LoginPage)
